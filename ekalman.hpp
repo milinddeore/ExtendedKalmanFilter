@@ -20,11 +20,11 @@ typedef struct mouse_info
 class ExtendedKalmanFilter
 {
 	private:
-		const float pval = 0.1;
-	    const float qval = 0.0001;
-	    const float rval = 0.1;
-        uint32_t height;
-        uint32_t width;
+		float pval;
+	    	float qval;
+	    	float rval;
+        	uint32_t height;
+        	uint32_t width;
 
 		// No previous prediction noise covariance
 		cv::Mat P_pre;
@@ -46,8 +46,12 @@ class ExtendedKalmanFilter
 		//
 		ExtendedKalmanFilter(uint32_t n, uint32_t m)
 		{
-            width = n;
-            height = m;
+			pval = 0.1;
+	    		qval = 0.0001;
+	    		rval = 0.1;
+
+            		width = n;
+            		height = m;
 
 			x = cv::Mat::zeros(1, n, CV_32FC1);
 			P_post = cv::Mat::eye(n, n, CV_32FC1) * pval;
@@ -62,8 +66,8 @@ class ExtendedKalmanFilter
 
 		cv::Mat step(float xx, float yy)
 		{
-            float xxyy[] = {xx, yy};
-            cv::Mat z(1, 2, CV_32FC1, xxyy);
+            		float xxyy[] = {xx, yy};
+            		cv::Mat z(1, 2, CV_32FC1, xxyy);
 
 			// Predict
 			F = cv::Mat::eye(2, 2, CV_32FC1);
